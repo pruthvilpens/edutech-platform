@@ -61,4 +61,9 @@ coverage/
 # Misc
 .vercel
 .turbo
+
+# AI folder and code dumps
+AI/
+code_dump.sh
+code_dump.txt
 EOF
