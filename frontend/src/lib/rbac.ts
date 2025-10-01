@@ -46,9 +46,9 @@ export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
 }
 
 export const ROLE_ROUTES: Record<Role, string[]> = {
-  admin: ['/dashboard/admin', '/dashboard/instructor', '/dashboard/student'],
-  instructor: ['/dashboard/instructor'],
-  student: ['/dashboard/student']
+  admin: ['/dashboard/admin', '/dashboard/instructor', '/dashboard/student', '/dashboard/settings'],
+  instructor: ['/dashboard/instructor', '/dashboard/settings'],
+  student: ['/dashboard/student', '/dashboard/settings']
 }
 
 export function hasPermission(userRole: Role, resource: string, action: string): boolean {

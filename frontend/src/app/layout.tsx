@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "EduTech Platform",
-    template: "%s • EduTech",
+    default: "YeeBitz Platform",
+    template: "%s • YeeBitz",
   },
   description: "AI-powered educational technology platform",
 };

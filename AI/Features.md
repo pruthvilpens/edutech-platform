@@ -1,185 +1,204 @@
- Unified Project Roadmap
+## **Week 1 – Core Foundation (Start of Milestone 1)**
 
-## **Week 1 – Setup & Core Foundation**
+### Repo & Infra
 
-* **Repo & Infra**
+* Setup **monorepo** (frontend + backend).
+* Initialize **Next.js + Tailwind + TypeScript** project.
+* Setup **Postgres + Hasura**, verify GraphQL endpoint.
+* Apply DB schema via Hasura migrations.
 
-  * Setup monorepo (frontend + backend ).
-  * Initialize **Next.js + Tailwind + TypeScript** project.
-  * Setup **Postgres + Hasura**, verify GraphQL endpoint.
-  * Apply DB schema via Hasura migrations.
+### DB Schema
 
-* **DB Schema**
+* Tables: users (Admin, Instructor, Student), documents (raw, processed), questions, tests, results, mindmaps, flashcards, leaderboards.
+* RBAC schema: usermaster, rolemaster, permissionmaster, menumaster, rolemenupermissionmapping.
 
-  * users (Admin, Instructor, Student)
-  * documents (raw, processed)
-  * questions, tests, results
-  * mindmaps, flashcards, leaderboards
-  * RBAC schema: usermaster, rolemaster, permissionmaster, menumaster, rolemenupermissionmapping
+### Auth & Roles
 
-* **Auth & Roles**
+* Setup **NextAuth** (credentials provider, JWT).
+* Verify login/signup flow.
+* Create roles (Admin, Instructor, Student).
+* Role-based routing in Next.js middleware.
 
-  * Setup **NextAuth** (credentials provider, JWT).
-  * Verify login/signup flow.
+### Frontend Core
 
-* **Frontend Core**
+* Global layout (Header, SideNav, Footer).
+* Role-based dashboards (Admin, Instructor, Student).
 
-  * Global layout (Header, SideNav, Footer).
 
-  * **Roles & RBAC**
+## **Week 2 – Document Pipeline + Chatbot + WhatsApp Bot (Milestone 1 Core)**
 
-  * Create roles (Admin, Instructor, Student) in DB.
-  * Add RBAC .
-  * Role-based routing in Next.js middleware.
+### Document & Chatbot Foundation
 
-* **Dashboards**
+* Python venv + install libs (`pypdf`, `docx`, `spacy`, `transformers`, `nltk`, `fastapi`).
+* Seetup FastAPI microservice, text extraction, preprocessing.
+* Store raw + cleaned text in Postgres.
+* Basic chatbot in app (using gemini api): upload doc → parse → retrieve Q&A.
 
-  * Build dashboards (Admin, Instructor, Student ).
+### WhatsApp Bot (Early Integration)
 
-## **Week 2 – Core User Flows + AI Mind-Map Pipeline**
+* Connect WhatsApp bot to chatbot pipeline.
+* Commands: `/start`, doc upload, account linking.
+* Daily quiz (basic) + leaderboard peek (prototype).
 
-* **AI Environment Setup**
+### Flashcards (Phase 1)
 
-  * Setup Python environment (venv).
-  * Install libs: `pypdf`, `docx`, `spacy`, `transformers`, `nltk`, `networkx`, `fastapi`.
-  * Build **FastAPI microservice** `/process-doc`.
-  * Implement text extraction (PDF/DOCX/TXT), preprocessing (sentence split, stopword removal).
-  * Store raw + cleaned text in Postgres.
+* Auto-generate flashcards from Q&A pipeline.
+* Basic spaced-repetition logic.
+* Export CSV/JSON (first version).
 
-* **Instructor Features**
+**Acceptance Criteria**
 
-  * Upload document (full end-to-end).
-  * Test Management: create test form, save metadata.
+* Chatbot + WhatsApp bot functional end-to-end for doc upload + quiz.
+* Flashcards generated + exportable.
 
-* **Student Features**
 
-  * View assigned tests.
+## **Week 3 – Mind Mapping + MCQs + Gamification (Milestone 1 Expansion + Milestone 2 Start)**
 
-* **AI Mind-Map Generation**
+### Mind Mapping
 
-  * Finalize model approach (OpenAI/CoreAI API or HuggingFace).
-  * Implement hierarchy extraction (Title → Sections → Sub-sections).
-  * Summarize into concise node labels.
-  * Generate JSON tree/graph.
-  * Store generated mind map in Postgres via Hasura.
+* Hierarchy extraction (Title → Section → Sub-sections).
+* Create/edit, expand/collapse explanations.
+* Export to JSON + Postgres.
 
----
+### MCQs
 
-## **Week 3 – Test & Result Management + Mind-Map Enhancements**
+* Instructor: add/edit MCQs, create tests from Q&A.
+* Student: take test (MCQ UI), auto-scoring via FastAPI.
+* Results stored + displayed.
 
-* **Instructor Workflows**
+### Flashcards (Phase 2)
 
-  * Question Management UI (add/edit MCQs).
-  * Create tests from questions.
-  * Assign tests to students.
+* Full spaced-repetition scheduling.
+* User-specific flashcard sets.
+* Integration with student dashboard.
 
-* **Student Workflows**
+### Gamification (Core)
 
-  * Take test (MCQ UI, option selection).
-  * Submit answers → FastAPI scoring → results in Postgres.
-  * Results page (score, attempted vs correct).
+* XP, badges, streaks, level-ups.
+* Leaderboard (class/global).
+* Sync with WhatsApp daily quiz.
 
-* **Mind-Map Enhancements**
+**Acceptance Criteria**
 
-  * Define schema for nodes/edges (frontend-ready JSON).
-  * Add semantic grouping & entity extraction.
-  * Export-ready JSON for React Flow/D3.js.
-  * Ability to refine branches (`/refine-mindmap`).
+* Mind mapping usable in app.
+* MCQs functional (test creation, scoring, results).
+* Gamification visible (XP, streaks, leaderboard).
 
----
 
-## **Week 4 – Dashboards, Analytics & Deployment (Web + AI)**
+## **Week 4 – Analytics + MCP Orchestration (Milestone 3)**
 
-* **Instructor Dashboard**
+### Analytics Dashboard
 
-  * View student results, analytics (score %, completion time, attempts).
+* **Instructor**: attempts, accuracy, time-to-answer, mastery.
+* **Student**: personal performance analytics.
+* **Admin**: manage users (CRUD).
 
-* **Admin Dashboard**
+### MCP Server (Orchestration)
 
-  * Manage users (CRUD).
+* Batch document tasks.
+* Q&A generation scaling (≥20 Qs/5 pages in ≤60s).
+* Analytics computations + cohort comparisons.
 
-* **Student Dashboard**
+### Gamification Expansion
 
-  * Personal performance analytics.
+* Weekly resets.
+* XP charts, streak history.
+* Leaderboards by topic/school.
 
-* **System & Infra**
+**Acceptance Criteria**
 
-  * Secure routes with middleware guards.
-  * UX polish: loading states, error handling, toast notifications.
-  * Optimize queries (indexes, Hasura caching).
-  * Containerize (Docker for Next.js + FastAPI).
-  * Setup Redis (session caching, rate limiting).
-  * Mock S3 integration for file storage.
-  * Testing: Cypress/Playwright, integration, security audit.
-  * Deployment prep (Docker Compose, migrations).
-  * Deploy (Vercel + Railway/Render).
+* Analytics metrics aggregated + shown correctly.
+* MCP handles batch doc + analytics tasks without failure.
+* Gamification expansions visible in app.
 
-* **AI Service**
 
-  * Logging & monitoring (loguru, Prometheus).
-  * Optimize summarization calls (batching, caching).
-  * Load testing (Locust).
-  * JWT-secured endpoints.
-  * Model optimization (quantization if self-hosted).
-  * Deploy AI service (Render/Railway/EC2).
+## **Week 5 – Payments + Multi-Tenant Logins (Milestone 3 Expansion)**
 
----
+### Payments
 
-## **Milestone 1 – Functional Base**
+* Payment gateway integration.
+* Subscription workflow (trial → premium → upgrade/downgrade).
+* Role upgrade on payment success.
 
-* Frontend integrated with Next.js/Tailwind template.
-* Auth + Dashboards working.
-* Chatbot: upload doc, parse, retrieve Q&A.
-* Mind Mapping: create/edit, expand/collapse, explanations, export.
+### Multi-Tenant Logins
 
----
+* Support org-level logins (schools/universities).
+* Efficient user separation + dashboards per org.
 
-## **Milestone 2 – Flashcards, Gamification, Payments**
+**Acceptance Criteria**
 
-* **Flashcards**: auto-generate from docs/Q&A, spaced repetition, export CSV/JSON.
-* **Gamification**: XP, badges, streaks, leaderboards (class/global).
-* **Doc Scan Pipeline**: cleanup + storage of original/processed text.
-* **Payments**: subscription workflows (trial → premium), role upgrade.
+* Payment flows validated with test accounts.
+* Multi-tenant login tested for different orgs.
 
-✅ Students use flashcards, earn XP/streaks, leaderboards active, payments functional.
 
----
+## **Week 6 – Security + Performance + Deployment Prep (Start of Milestone 4)**
 
-## **Milestone 3 – Analytics & Expansion**
+### Security & Hardening
 
-* **Frontend Polish**: integrate purchased Next.js/Tailwind template, responsive UI.
-* **Analytics Dashboard**: attempts, accuracy, time-to-answer, mastery visualization.
-* **Gamification Expansion**: XP charts, streak history, weekly reset.
-* **Login Enhancements**: org-level logins (multi-tenant).
-* **MCP Analytics Engine**: batch analytics, cohort comparisons.
+* RBAC + JWT validation.
+* Redis for caching + rate limiting.
+* Error handling, monitoring (Prometheus/loguru).
+* Accessibility (WCAG).
 
----
+### Deployment Prep
 
-## **Milestone 4 – Hardening & UAT**
+* Dockerized microservices (Next.js + FastAPI + MCP).
+* Staging deploy with seeded accounts.
+* Integration testing (Cypress, Playwright).
+* Load testing (Locust).
 
-* **Integration**: Web app + AI + WhatsApp bot + MCP + payments + gamification.
-* **Security**: RBAC, JWT validation, rate limits.
-* **Performance**: Redis caching, error handling, WCAG accessibility.
-* **Deployment**: staging with Dockerized microservices.
-* **Docs**: admin quick-guide, runbook, release notes, known-issues register.
-* **Testing**: end-to-end Cypress, load testing (Locust), bug triage & fixes.
+**Acceptance Criteria**
 
----
+* Staging deployment functional.
+* Security audits pass.
+* Performance baseline achieved.
 
-## ✅ Final Deliverable Overview
+
+## **Week 7 – UAT + Documentation + Bug Fixes (Final Milestone 4)**
+
+### Full Integration
+
+* End-to-end: Web app + MCP + WhatsApp + AI + flashcards + gamification + payments.
+
+### Documentation
+
+* Admin quick-guide.
+* Runbook (deploy/rollback).
+* Release notes + known issues.
+
+### Final QA & UAT
+
+* UAT with test accounts.
+* Final bug triage + resolution.
+
+**Acceptance Criteria**
+
+* All modules meet UAT benchmarks.
+* Documentation complete + validated.
+* Client sign-off on staging.
+
+
+# ✅ **Final Deliverable Overview**
 
 * **Web App**: Login, dashboards, document upload, Q&A, tests, results, flashcards, gamification, analytics.
 * **AI Service**: Doc parsing, Q&A generation, mind-map generator, refinement, batch processing.
 * **WhatsApp Bot**: `/start`, doc upload, daily quiz, leaderboard peek.
-* **MCP Server**: Orchestrates doc parsing, Q&A pipeline, WhatsApp bot, analytics.
+* **MCP Server**: Orchestrates doc parsing, Q&A, analytics.
 * **Payments**: Subscription workflows with role upgrades.
 * **Deployment**: Dockerized, secured, monitored, documented.
 
 
 
-Default Credentials
+do all these yourself:
+Edit .env with  values
+run the migration
 
-Admin: admin@edutech.com / Admin@123
-Hasura Secret: myadminsecretkey
 
 
+Done! Congratulations on your new bot. You will find it at t.me/yeebitz_bot. You can now add a description, about section and profile picture for your bot, see /help for a list of commands. By the way, when you've finished creating your cool bot, ping our Bot Support if you want a better username for it. Just make sure the bot is fully operational before you do this.
+
+Use this token to access the HTTP API:
+8294482453:AAGbB-_tQoib0nF57F4kW7-pSkGAXM3-_3E
+Keep your token secure and store it safely, it can be used by anyone to control your bot.
+
+For a description of the Bot API, see this page: https://core.telegram.org/bots/api

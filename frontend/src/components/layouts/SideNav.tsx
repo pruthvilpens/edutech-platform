@@ -16,6 +16,10 @@ const getNavItems = (role: Role): NavItem[] => {
   const baseItems: NavItem[] = [
     { name: 'Dashboard', href: '/dashboard' },
   ]
+  
+  const settingsItem: NavItem[] = [
+    { name: 'Settings', href: '/dashboard/settings' },
+  ]
 
   if (role === 'admin') {
     return [
@@ -25,6 +29,7 @@ const getNavItems = (role: Role): NavItem[] => {
       { name: 'Questions', href: '/dashboard/admin/questions', resource: 'question', action: 'read' },
       { name: 'Tests', href: '/dashboard/admin/tests', resource: 'test', action: 'read' },
       { name: 'Results', href: '/dashboard/admin/results', resource: 'result', action: 'read_all' },
+      ...settingsItem,
     ]
   }
 
@@ -35,14 +40,17 @@ const getNavItems = (role: Role): NavItem[] => {
       { name: 'Questions', href: '/dashboard/instructor/questions', resource: 'question', action: 'read' },
       { name: 'Tests', href: '/dashboard/instructor/tests', resource: 'test', action: 'read' },
       { name: 'Results', href: '/dashboard/instructor/results', resource: 'result', action: 'read_all' },
+      ...settingsItem,
     ]
   }
 
   return [
     ...baseItems,
+    { name: 'Documents', href: '/dashboard/student/documents', resource: 'document', action: 'read' },
     { name: 'My Tests', href: '/dashboard/student/tests', resource: 'test', action: 'read' },
     { name: 'My Results', href: '/dashboard/student/results', resource: 'result', action: 'read' },
     { name: 'Leaderboard', href: '/dashboard/student/leaderboard' },
+    ...settingsItem,
   ]
 }
 
